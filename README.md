@@ -1,0 +1,2 @@
+# 100 DAYS OF DSA   
+This repository contains solutions to various Data Structures and Algorithms (DSA) problems solved over a span of 100 days. Each day focuses on a different problem, providing an opportunity to enhance problem-solving skills and deepen understanding of DSA concepts.
