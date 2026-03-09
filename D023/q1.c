@@ -1,0 +1,111 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct Node{
+    int data;
+    struct Node * next;
+};
+void insertEnd(struct Node* head,int val){
+    if (head==NULL){
+        printf("Really???");
+        return;
+    }
+    struct Node* temp=head;
+    struct Node* newNode=NULL;
+    newNode=(struct Node*)malloc(sizeof(struct Node));
+    while(temp->next!=NULL){
+        temp=temp->next;
+    }
+    temp->next=newNode;
+    newNode->data=val;
+    newNode->next=NULL;
+}
+void printList(struct Node* head){
+    if (head==NULL || head->next==NULL){
+        printf("Really???");
+        return;
+    }
+    struct Node* temp=head->next;
+    while(temp->next!=NULL){
+        printf("%d ",temp->data);
+        temp=temp->next;
+    }
+    if(temp==head){
+        printf("really?");
+        return;
+    }
+    printf("%d",temp->data);
+
+}
+void freeList(struct Node* head){
+    if (head==NULL){
+        printf("Really???");
+        return;
+    }
+    struct Node* temp=head;
+    while(head!=NULL){
+        temp=head;
+        head=head->next;
+        free(temp);
+
+    }
+}
+int main(){
+    struct Node* head1=NULL;
+    head1=(struct Node*)malloc(sizeof(struct Node));
+    head1->next=NULL;
+    struct Node* head2=NULL;
+    head2=(struct Node*)malloc(sizeof(struct Node));
+    head2->next=NULL;
+    int n1;
+    scanf("%d",&n1);
+    for(int i=0;i<n1;i++){
+        int val;
+        scanf("%d",&val);
+        insertEnd(head1,val);
+    }
+    int n2;
+    scanf("%d",&n2);
+    for(int i=0;i<n2;i++){
+        int val;
+        scanf("%d",&val);
+        insertEnd(head2,val);
+    }
+    struct Node* head3=NULL;
+    head3=(struct Node*)malloc(sizeof(struct Node));
+    head3->next=NULL;
+    struct Node* temp1=head1->next;
+    struct Node* temp2=head2->next;
+    struct Node* temp3=head3;
+    for(int i=0;i<n1+n2;i++){
+        int val;
+        if(temp1==NULL){
+            val=temp2->data;
+            temp2=temp2->next;
+        }else if(temp2==NULL){
+            val=temp1->data;
+            temp1=temp1->next;
+        }
+
+
+        else if(temp1->data>temp2->data){
+
+           val=temp2->data;
+           temp2=temp2->next;
+        }else if(temp2==NULL || temp1->data<=temp2->data){
+            val=temp1->data;
+            temp1=temp1->next;
+        }
+        insertEnd(head3,val);
+        
+
+    }
+
+    freeList(head1);
+
+    freeList(head2);
+    printList(head3);
+    freeList(head3);
+    return 0;
+
+
+}
