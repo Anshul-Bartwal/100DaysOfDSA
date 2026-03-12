@@ -1,0 +1,69 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node{
+    int data;
+    struct Node* next;
+    struct Node* prev;
+};
+
+struct Node* insertEnd(struct Node* head, int val){
+    
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = val;
+    newNode->next = NULL;
+    newNode->prev = NULL;
+
+    if(head == NULL){
+        return newNode;
+    }
+
+    struct Node* temp = head;
+
+    while(temp->next != NULL){
+        temp = temp->next;
+    }
+
+    temp->next = newNode;
+    newNode->prev = temp;
+
+    return head;
+}
+
+void traverseForward(struct Node* head){
+    
+    struct Node* temp = head;
+
+    while(temp != NULL){
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+}
+void freeList(struct Node* head){
+
+    struct Node* temp;
+
+    while(head != NULL){
+        temp = head;
+        head = head->next;
+        free(temp);
+    }
+}
+int main(){
+
+    int n;
+    scanf("%d",&n);
+
+    struct Node* head = NULL;
+
+    for(int i = 0; i < n; i++){
+        int val;
+        scanf("%d",&val);
+        head = insertEnd(head,val);
+    }
+
+    traverseForward(head);
+    freeList(head);
+
+    return 0;
+}
