@@ -1,0 +1,71 @@
+#include <stdio.h>
+
+#define EMPTY -1
+
+int table[100];
+
+// hash function
+int hash(int key, int m) {
+    return key % m;
+}
+
+// INSERT using quadratic probing
+void insert(int key, int m) {
+    int h = hash(key, m);
+
+    for (int i = 0; i < m; i++) {
+        int idx = (h + i*i) % m;
+
+        if (table[idx] == EMPTY) {
+            table[idx] = key;
+            return;
+        }
+    }
+
+    printf("Table Full\n");
+}
+
+// SEARCH using quadratic probing
+int search(int key, int m) {
+    int h = hash(key, m);
+
+    for (int i = 0; i < m; i++) {
+        int idx = (h + i*i) % m;
+
+        if (table[idx] == EMPTY)
+            return 0;  // not found
+
+        if (table[idx] == key)
+            return 1;  // found
+    }
+
+    return 0;
+}
+
+int main() {
+    int m, q;
+    scanf("%d", &m);
+    scanf("%d", &q);
+
+    // initialize table
+    for (int i = 0; i < m; i++)
+        table[i] = EMPTY;
+
+    while (q--) {
+        char op[10];
+        int key;
+
+        scanf("%s %d", op, &key);
+
+        if (op[0] == 'I') {
+            insert(key, m);
+        } else if (op[0] == 'S') {
+            if (search(key, m))
+                printf("FOUND\n");
+            else
+                printf("NOT FOUND\n");
+        }
+    }
+
+    return 0;
+}
